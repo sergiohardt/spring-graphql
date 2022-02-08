@@ -1,0 +1,16 @@
+type Apolice {
+	apoliceAutoUID: ID!
+	cia: String
+	cpfCPJCorretor: String
+}
+
+
+# Root
+type Query {
+	findAllApolices: [Apolice]!
+}
+
+# Root
+type Mutation {
+	createApolice(cia: String, cpfCPJCorretor: String, certificadoUID: Long): Apolice!
+}

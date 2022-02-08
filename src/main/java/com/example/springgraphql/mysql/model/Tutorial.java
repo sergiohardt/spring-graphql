@@ -1,4 +1,4 @@
-package com.bezkoder.springgraphql.mysql.model;
+package com.example.springgraphql.mysql.model;
 
 import javax.persistence.*;
 

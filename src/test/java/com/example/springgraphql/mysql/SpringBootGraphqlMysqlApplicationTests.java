@@ -1,4 +1,4 @@
-package com.bezkoder.springgraphql.mysql;
+package com.example.springgraphql.mysql;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

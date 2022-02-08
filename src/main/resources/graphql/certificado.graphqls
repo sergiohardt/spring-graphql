@@ -1,0 +1,20 @@
+type Certificado {
+	certificadoUID: ID!
+	cdProdutoRet: Int!
+	chaveNegocio: Int
+	descricaoSituacao: String
+	nomeProduto: String
+	numeroApolice: Int!
+	ramo: Int
+	seguradoUID: Int	
+}
+
+# Root
+extend type Query {
+	findAllCertificados: [Certificado]!
+}
+
+# Root
+extend type Mutation {
+	createCertificado(cdProdutoRet: Int!, numeroApolice: Int!, seguradoUID: Int!): Certificado!
+}

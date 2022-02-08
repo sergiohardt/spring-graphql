@@ -9,7 +9,7 @@
 		<version>2.2.1.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bezkoder</groupId>
+	<groupId>com.example</groupId>
 	<artifactId>spring-boot-graphql-mysql</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-graphql-mysql</name>
