@@ -2,55 +2,26 @@ package com.example.springgraphql.mysql.resolver;
 
 import java.util.Optional;
 
+import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import com.example.springgraphql.mysql.model.Apolice;
+import com.example.springgraphql.mysql.model.Certificado;
+import com.example.springgraphql.mysql.repository.ApoliceAutoRepository;
+import com.example.springgraphql.mysql.repository.CertificadoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.example.springgraphql.mysql.model.Author;
-import com.example.springgraphql.mysql.model.Certificado;
-import com.example.springgraphql.mysql.model.Tutorial;
-import com.example.springgraphql.mysql.model.Apolice;
-import com.example.springgraphql.mysql.repository.AuthorRepository;
-import com.example.springgraphql.mysql.repository.CertificadoRepository;
-import com.example.springgraphql.mysql.repository.TutorialRepository;
-import com.example.springgraphql.mysql.repository.ApoliceAutoRepository;
 
 import javassist.NotFoundException;
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
-	private AuthorRepository authorRepository;
-	private TutorialRepository tutorialRepository;
 	private CertificadoRepository certificadoRepository;
 	private ApoliceAutoRepository apoliceAutoRepository;
 
 	@Autowired
-	public Mutation(AuthorRepository authorRepository, TutorialRepository tutorialRepository, CertificadoRepository certificadoRepository, ApoliceAutoRepository apoliceAutoRepository) {
-		this.authorRepository = authorRepository;
-		this.tutorialRepository = tutorialRepository;
+	public Mutation(CertificadoRepository certificadoRepository, ApoliceAutoRepository apoliceAutoRepository) {
 		this.certificadoRepository = certificadoRepository;
 		this.apoliceAutoRepository = apoliceAutoRepository;
-	}
-
-	public Author createAuthor(String name, Integer age) {
-		Author author = new Author();
-		author.setName(name);
-		author.setAge(age);
-
-		authorRepository.save(author);
-
-		return author;
-	}
-
-	public Tutorial createTutorial(String title, String description, Long authorId) {
-		Tutorial book = new Tutorial();
-		book.setAuthor(new Author(authorId));
-		book.setTitle(title);
-		book.setDescription(description);
-
-		tutorialRepository.save(book);
-
-		return book;
 	}
 
 	public Certificado createCertificado(Integer cdProdutoRet, Integer numeroApolice, Integer seguradoUID) {
@@ -64,7 +35,6 @@ public class Mutation implements GraphQLMutationResolver {
 		return certificado;
 	}
 
-	//public ApoliceAuto createApoliceAuto(String cia, String cpfCPJCorretor, Long certificadoUID) {
 	public Apolice createApolice(String cia, String cpfCPJCorretor, Long certificadoUID) {
 		Apolice apoliceAuto = new Apolice();
 		apoliceAuto.setCia(cia);
@@ -76,26 +46,24 @@ public class Mutation implements GraphQLMutationResolver {
 		return apoliceAuto;
 	}
 
-	public boolean deleteTutorial(Long id) {
-		tutorialRepository.deleteById(id);
+	public boolean deleteCertificaodo(Long id) {
+		certificadoRepository.deleteById(id);
 		return true;
 	}
 
-	public Tutorial updateTutorial(Long id, String title, String description) throws NotFoundException {
-		Optional<Tutorial> optTutorial = tutorialRepository.findById(id);
+	public Certificado updateCertificaodo(Long id, Integer cdProdutoRet, Integer numeroApolice, Integer seguradoUID) throws NotFoundException {
+		Optional<Certificado> optTutorial = certificadoRepository.findById(id);
 
 		if (optTutorial.isPresent()) {
-			Tutorial tutorial = optTutorial.get();
+			Certificado certificado = optTutorial.get();
+			certificado.setCdProdutoRet(cdProdutoRet);
+			certificado.setNumeroApolice(numeroApolice);
+			certificado.setSeguradoUID(seguradoUID);
 
-			if (title != null)
-				tutorial.setTitle(title);
-			if (description != null)
-				tutorial.setDescription(description);
-
-			tutorialRepository.save(tutorial);
-			return tutorial;
+			certificadoRepository.save(certificado);
+			return certificado;
 		}
 
-		throw new NotFoundException("Not found Tutorial to update!");
+		throw new NotFoundException("Not found Certificado to update!");
 	}
 }
